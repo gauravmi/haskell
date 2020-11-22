@@ -16,16 +16,16 @@ neighbors cell =
 aliveNeighbors :: Cell -> Int
 aliveNeighbors cell = length $ filter isAlive (neighbors cell)
 
-loneliness, overcrowding, unchanged :: Cell -> Bool
-loneliness cell   = aliveNeighbors cell < 2
-overcrowding cell = aliveNeighbors cell > 3
-unchanged cell    = let length = aliveNeighbors cell in length == 2 || length == 3
+isLonely, isOvercrowded, isUnchanged :: Cell -> Bool
+isLonely cell   = aliveNeighbors cell < 2
+isOvercrowded cell = aliveNeighbors cell > 3
+isUnchanged cell    = let length = aliveNeighbors cell in length == 2 || length == 3
 
 aliveCells = [Cell 1 1]
 
 evolve :: Cell -> Cell
 evolve cell
-  | loneliness cell   = DeadCell (x cell) (y cell)
-  | overcrowding cell = DeadCell (x cell) (y cell)
-  | unchanged cell    = cell
+  | isLonely cell   = DeadCell (x cell) (y cell)
+  | isOvercrowded cell = DeadCell (x cell) (y cell)
+  | isUnchanged cell    = cell
   | otherwise         = cell
