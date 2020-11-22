@@ -16,7 +16,7 @@ front, back, top, bottom :: Position -> Position
 front (Position x y)  = Position (x+1) y
 back (Position x y)   = Position (x-1) y
 top (Position x y)    = Position x (y+1)
-bottom (Position x y)= Position x (y-1)
+bottom (Position x y) = Position x (y-1)
 
 data Rover = Rover { position :: Position, direction :: Direction} deriving (Show)
 
@@ -27,11 +27,10 @@ right :: Rover -> Rover
 right (Rover position direction) = Rover position (rightD $ state direction)
 
 move :: Rover -> Rover
-move (Rover p@(Position x y) direction)
-  | direction == N = Rover (top p) direction
-  | direction == E = Rover (front p) direction
-  | direction == W = Rover (back p) direction
-  | direction == S = Rover (bottom p) direction
+move (Rover p@(Position x y) N) = Rover (top p) N
+move (Rover p@(Position x y) E) = Rover (front p) E
+move (Rover p@(Position x y) W) = Rover (back p) W
+move (Rover p@(Position x y) S) = Rover (bottom p) S
 
 type OriginX = Int
 type OriginY = Int
