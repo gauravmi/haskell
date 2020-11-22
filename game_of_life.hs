@@ -25,7 +25,7 @@ aliveCells = [Cell 1 1]
 
 evolve :: Cell -> Cell
 evolve cell
-  | loneliness cell   = DeadCell (x cell) (y cell)
-  | overcrowding cell = DeadCell (x cell) (y cell)
+  | lonely cell   = DeadCell (x cell) (y cell)
+  | overcrowded cell = DeadCell (x cell) (y cell)
   | unchanged cell    = cell
   | otherwise         = cell
