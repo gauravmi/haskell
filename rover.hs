@@ -11,6 +11,13 @@ state S = State E W
 state E = State N S
 
 data Position = Position {x :: Int, y::Int} deriving (Show, Read)
+
+front, back, top, bottom :: Position -> Position
+front (Position x y)  = Position (x+1) y
+back (Position x y)   = Position (x-1) y
+top (Position x y)    = Position x (y+1)
+bottom (Position x y)= Position x (y-1)
+
 data Rover = Rover { position :: Position, direction :: Direction} deriving (Show)
 
 left :: Rover -> Rover
@@ -20,11 +27,11 @@ right :: Rover -> Rover
 right (Rover position direction) = Rover position (rightD $ state direction)
 
 move :: Rover -> Rover
-move (Rover (Position x y) direction)
-  | direction == N = Rover (Position x (y+1)) direction
-  | direction == E = Rover (Position (x+1) y) direction
-  | direction == W = Rover (Position (x-1) y) direction
-  | direction == S = Rover (Position x (y-1)) direction
+move (Rover p@(Position x y) direction)
+  | direction == N = Rover (top p) direction
+  | direction == E = Rover (front p) direction
+  | direction == W = Rover (back p) direction
+  | direction == S = Rover (bottom p) direction
 
 type OriginX = Int
 type OriginY = Int
