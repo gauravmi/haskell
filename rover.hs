@@ -1,8 +1,8 @@
 data Direction = N | E | W | S deriving (Show, Eq, Read)
 
 data State = State {
-  leftD:: Direction,
-  rightD:: Direction
+  left:: Direction,
+  right:: Direction
 } deriving (Show, Read, Eq)
 
 state N = State W E
@@ -20,11 +20,11 @@ bottom (Position x y) = Position x (y-1)
 
 data Rover = Rover { position :: Position, direction :: Direction} deriving (Show)
 
-left :: Rover -> Rover
-left (Rover position direction) = Rover position (leftD $ state direction)
+turnLeft :: Rover -> Rover
+turnLeft (Rover position direction) = Rover position (left $ state direction)
 
-right :: Rover -> Rover
-right (Rover position direction) = Rover position (rightD $ state direction)
+turnRight :: Rover -> Rover
+turnRight (Rover position direction) = Rover position (right $ state direction)
 
 move :: Rover -> Rover
 move (Rover p@(Position x y) N) = Rover (top p) N
@@ -41,8 +41,8 @@ run :: Rover -> String -> Rover
 run r [] = r
 run rover (x:xs)
   | x == 'M' = run (move rover) xs
-  | x == 'L' = run (left rover) xs
-  | x == 'R' = run (right rover) xs
+  | x == 'L' = run (turnLeft rover) xs
+  | x == 'R' = run (turnRight rover) xs
 
 main = do
   [ inputX, inputY, inputD, pattern ] <- sequence [getLine, getLine, getLine, getLine]
